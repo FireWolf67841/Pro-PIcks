@@ -3,105 +3,243 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pro Picks – Trending Picks</title>
+  <title>Pro Picks | Premium Essentials</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #050505;
+      --card-bg: rgba(26, 28, 30, 0.8);
+      --accent: #0071e3;
+      --accent-glow: rgba(0, 113, 227, 0.3);
+      --text-main: #f5f5f7;
+      --text-dim: #a1a1a6;
+    }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #1f1f1f;
-      color: #eeeeee;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
       margin: 0;
-      padding: 0;
+      overflow-x: hidden;
+      min-height: 100vh;
     }
+
+    /* Dynamic Background Graphics */
+    .bg-glow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(circle at 20% 30%, #1a1a1a 0%, transparent 40%),
+                  radial-gradient(circle at 80% 70%, #111 0%, transparent 40%);
+    }
+
+    .floating-shape {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      background: var(--accent);
+      filter: blur(150px);
+      opacity: 0.15;
+      border-radius: 50%;
+      z-index: -1;
+      animation: float 20s infinite alternate;
+    }
+
+    @keyframes float {
+      0% { transform: translate(-10%, -10%); }
+      100% { transform: translate(50%, 40%); }
+    }
+
     header {
-      background: #2b2b2b;
-      padding: 20px;
+      padding: 60px 20px 20px;
       text-align: center;
+      perspective: 1000px;
     }
+
     header h1 {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 5rem;
+      letter-spacing: 4px;
       margin: 0;
-      font-size: 2em;
-      color: #ffffff;
+      background: linear-gradient(180deg, #ffffff 0%, #888888 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+      transform: rotateX(10deg);
+      animation: textEnter 1.2s ease-out;
     }
+
+    @keyframes textEnter {
+      from { opacity: 0; transform: translateZ(-200px) rotateX(30deg); }
+      to { opacity: 1; transform: translateZ(0) rotateX(10deg); }
+    }
+
     .intro {
+      max-width: 600px;
+      margin: 20px auto;
       text-align: center;
-      margin: 20px;
-      font-size: 1.2em;
-      color: #cccccc;
+      color: var(--text-dim);
+      font-size: 1.1rem;
+      backdrop-filter: blur(5px);
     }
+
     .grid {
-      display: flex;
-      justify-content: center;
-      padding: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
     }
+
     .product {
-      background: #2d2d2d;
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-      width: 280px;
-      text-align: center;
-      padding: 20px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
     }
+
+    .product::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at top right, rgba(255,255,255,0.05), transparent);
+      pointer-events: none;
+    }
+
     .product:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      transform: translateY(-15px) scale(1.02);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px var(--accent-glow);
     }
+
+    .badge {
+      background: var(--accent);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
     .product img {
-      max-width: 100%;
-      border-radius: 10px;
-      margin-bottom: 14px;
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      margin-bottom: 25px;
+      transition: transform 0.4s ease;
+      filter: drop-shadow(0 15px 25px rgba(0,0,0,0.4));
     }
+
+    .product:hover img {
+      transform: translateZ(30px) scale(1.1);
+    }
+
     .product h2 {
-      font-size: 1.2em;
-      margin: 12px 0;
-      color: #f5f5f5;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 0 0 20px;
+      text-align: center;
+      height: 3rem;
+      display: flex;
+      align-items: center;
     }
-    .product a {
-      display: inline-block;
-      margin-top: 14px;
-      background: #d8a7b1;
-      color: #1f1f1f;
-      font-weight: bold;
-      padding: 12px 20px;
+
+    .btn {
+      width: 100%;
+      background: var(--text-main);
+      color: var(--bg);
+      text-align: center;
+      padding: 16px 0;
       text-decoration: none;
-      border-radius: 6px;
-      transition: background 0.25s;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      margin-top: auto;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
-    .product a:hover {
-      background: #c8919d;
+
+    .btn:hover {
+      background: var(--accent);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px var(--accent-glow);
     }
+
     footer {
       text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
-      color: #888;
-      background: #2a2a2a;
+      padding: 80px 20px;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      border-top: 1px solid #1a1a1a;
+      background: rgba(0,0,0,0.5);
     }
   </style>
 </head>
 <body>
 
+<div class="bg-glow"></div>
+<div class="floating-shape"></div>
+
 <header>
-  <h1>Pro Picks</h1>
+  <h1>PRO PICKS</h1>
 </header>
 
 <div class="intro">
-  <p>Elevated essentials — simple, effective, and built for real results 💪</p>
+  <p>Elevated tech and performance essentials curated for the modern professional.</p>
 </div>
 
 <div class="grid">
 
-  <!-- Hand Gripper -->
   <div class="product">
+    <div class="badge">Performance King</div>
+    <img src="https://m.media-amazon.com/images/I/61OyKi98IuL._AC_SL1500_.jpg" alt="Google Pixel 10 Pro" />
+    <h2>Google Pixel 10 Pro</h2>
+    <a href="https://amzn.to/4caSuOh" class="btn" target="_blank">View on Amazon</a>
+  </div>
+
+  <div class="product">
+    <div class="badge">New Arrival</div>
+    <img src="https://m.media-amazon.com/images/I/51CUNTDaZCL._AC_SL1001_.jpg" alt="Metal Sensory Fidget Spinner" />
+    <h2>Metal Sensory Spinner</h2>
+    <a href="https://amzn.to/3O4VxOO" class="btn" target="_blank">View on Amazon</a>
+  </div>
+
+  <div class="product">
+    <div class="badge">Viral Trend</div>
+    <img src="https://m.media-amazon.com/images/I/71w-1v1v26L._AC_SL1500_.jpg" alt="Satisfying Clicky Keys" />
+    <h2>Satisfying Clicky Keys</h2>
+    <a href="https://amzn.to/3ODsa6g" class="btn" target="_blank">View on Amazon</a>
+  </div>
+
+  <div class="product">
+    <div class="badge">Daily Carry</div>
     <img src="https://m.media-amazon.com/images/I/718tBdzFF6L._AC_SY300_SX300_QL70_FMwebp_.jpg" alt="Adjustable Hand Gripper" />
     <h2>Adjustable Hand Gripper</h2>
-    <a href="https://amzn.to/4qFfdGZ" target="_blank">Shop Now</a>
+    <a href="https://amzn.to/4qFfdGZ" class="btn" target="_blank">View on Amazon</a>
   </div>
 
 </div>
 
 <footer>
-  © 2026 Pro Picks – Affiliate Disclosure: As an Amazon Associate I earn from qualifying purchases.
+  <p>© 2026 Pro Picks — All Rights Reserved</p>
+  <p style="max-width: 600px; margin: 10px auto;">Affiliate Disclosure: As an Amazon Associate, I earn from qualifying purchases. This supports the curation of premium content at no extra cost to you.</p>
 </footer>
 
 </body>
